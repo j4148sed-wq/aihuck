@@ -1,63 +1,201 @@
-/* style.css のタービンエリア */
+/* 全体のリセットと背景設定 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-/* タービン全体の配置コンテナ */
-.turbine-container {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    margin: 30px auto;
+body {
+    background-color: #0a0f12; /* 深みのあるダークサイバーネイビー */
+    color: #e0e6ed;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #111;
-    border-radius: 50%;
-    border: 4px solid #333;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+    min-height: 100vh;
+    padding: 20px;
 }
 
-/* CSSだけで描くタービン本体 */
+/* ゲームのメインダッシュボード */
+.game-dashboard {
+    background: linear-gradient(135deg, #12181f 0%, #0b1015 100%);
+    width: 100%;
+    max-width: 500px;
+    padding: 30px 25px;
+    border-radius: 20px;
+    border: 2px solid #1f2d3d;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 136, 0.05);
+    text-align: center;
+}
+
+/* ヘッダーデザイン */
+.game-header h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+}
+
+.game-header .subtitle {
+    font-size: 0.85rem;
+    color: #637b94;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* タービン配置ゾーン */
+.turbine-zone {
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- タービン（元のデザインを美しく配置） --- */
+.turbine-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #070a0e;
+    border-radius: 50%;
+    border: 3px solid #1a2430;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+}
+
 .css-turbine {
     position: relative;
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    background: radial-gradient(circle, #444 0%, #222 40%, #555 50%, #111 70%, #333 100%);
+    background: radial-gradient(circle, #3a4654 0%, #1c242e 40%, #2a3543 50%, #0f141a 70%, #1e2631 100%);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     transition: transform 0.1s linear, filter 0.2s ease;
 }
 
-/* タービンの中心軸（コア） */
 .turbine-core {
     position: absolute;
     top: 50%; left: 50%;
-    width: 40px; height: 40px;
-    margin-top: -20px; margin-left: -20px;
+    width: 36px; height: 36px;
+    margin-top: -18px; margin-left: -18px;
     border-radius: 50%;
-    background: radial-gradient(circle, #00ffff 0%, #005555 60%, #222 100%);
-    box-shadow: 0 0 10px #00ffff;
+    background: radial-gradient(circle, #00ffff 0%, #006666 60%, #0b1015 100%);
+    box-shadow: 0 0 12px #00ffff;
     z-index: 10;
 }
 
-/* タービンの羽根（ブレード）の共通設定 */
 .blade {
     position: absolute;
-    top: 0; left: 82px;
-    width: 16px;
-    height: 180px;
-    background: linear-gradient(90deg, #666, #aaa 30%, #333 70%, #111);
-    border-radius: 4px;
-    opacity: 0.85;
+    top: 0; left: 73px;
+    width: 14px;
+    height: 160px;
+    background: linear-gradient(90deg, #485666, #95a5b5 30%, #283442 70%, #0f141a);
+    border-radius: 3px;
+    opacity: 0.9;
 }
 
-/* 各羽根を45度刻みで配置 */
 .b1 { transform: rotate(0deg); }
 .b2 { transform: rotate(45deg); }
 .b3 { transform: rotate(90deg); }
 .b4 { transform: rotate(135deg); }
 
+/* --- 操作パネルエリア --- */
+.control-panel {
+    margin-top: 15px;
+}
 
-/* --- アニメーションとエフェクト --- */
+.input-box {
+    position: relative;
+    background: #080d11;
+    border: 1px solid #203144;
+    border-radius: 12px;
+    padding: 12px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
 
+.input-box:focus-within {
+    border-color: #00ff88;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.15);
+}
+
+#fumanInput {
+    width: 100%;
+    height: 75px;
+    background: transparent;
+    border: none;
+    color: #e0e6ed;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+}
+
+#fumanInput::placeholder {
+    color: #4a5d73;
+}
+
+/* 発電ボタン */
+#chargeBtn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 14px;
+    background: linear-gradient(135deg, #00ff88 0%, #00b35f 100%);
+    color: #05080c;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+}
+
+#chargeBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+}
+
+#chargeBtn:active {
+    transform: translateY(1px);
+}
+
+/* --- 出力（モニター）エリア --- */
+.output-monitor {
+    margin-top: 25px;
+    text-align: left;
+}
+
+.monitor-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #00ffff;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    padding-left: 4px;
+}
+
+.monitor-screen {
+    background: #05080c;
+    border-left: 4px solid #00ffff;
+    border-radius: 4px 12px 12px 4px;
+    padding: 18px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+#meigenOutput {
+    color: #00ffff;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+}
+
+/* --- アニメーション関連 --- */
 .spinning {
     animation: spin var(--spin-speed, 1s) linear infinite;
 }
@@ -67,7 +205,6 @@
     to { transform: rotate(360deg); }
 }
 
-/* 周囲の電撃・ネオンエフェクト */
 .lightning-effect {
     position: absolute;
     top: 0; left: 0;
@@ -78,9 +215,8 @@
     transition: opacity 0.2s, box-shadow 0.2s;
 }
 
-/* 不満注入時にJSで付与されるクラス */
 .active-lightning {
     opacity: 1;
-    box-shadow: 0 0 var(--lightning-intensity, 10px) #00ffff,
-                inset 0 0 var(--lightning-intensity, 10px) #00ffff;
+    box-shadow: 0 0 var(--lightning-intensity, 12px) #00ffff,
+                inset 0 0 var(--lightning-intensity, 12px) #00ffff;
 }
