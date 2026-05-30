@@ -1,5 +1,5 @@
 // ==========================================================================
-// 1. HTML要素の取得 (DOM Elements)
+// 1. HTML要素の取得
 // ==========================================================================
 const fumanInput = document.getElementById('fumanInput');
 const chargeBtn = document.getElementById('chargeBtn');
@@ -9,9 +9,8 @@ const meigenOutput = document.getElementById('meigenOutput');
 const logHistory = document.getElementById('logHistory');
 
 // ==========================================================================
-// 2. 事前入力された名言データ（データベース）
+// 2. 事前入力された名言データベース
 // ==========================================================================
-// 💡 ここに好きなセリフ（名言・迷言）を自由に追加・編集できます！
 const meigenDatabase = [
     "「理不尽は宇宙からの経験値パックだ。開封時の演出が長いだけで中身は豪華かもしれない。」",
     "「満員電車は、君の圧倒的な主人公オーラを抑え込むための強制イベントに過ぎない。」",
@@ -29,7 +28,7 @@ const meigenDatabase = [
 ];
 
 // ==========================================================================
-// 3. 発電（ランダム変換）処理イベント
+// 3. 発電（変換）処理イベント
 // ==========================================================================
 chargeBtn.addEventListener('click', () => {
     const fumanText = fumanInput.value.trim();
@@ -43,7 +42,7 @@ chargeBtn.addEventListener('click', () => {
     // --- 【演出フェーズ：不満の熱量を解析】 ---
     const textLength = fumanText.length;
     
-    // 1. 回転速度を決定（文字数が多いほど爆速になる。最速0.05秒）
+    // 1. 回転速度を決定（文字数が多いほど爆速。最速0.05秒）
     let speed = 1.0 - (textLength * 0.03); 
     if (speed < 0.05) speed = 0.05; 
     
@@ -59,42 +58,44 @@ chargeBtn.addEventListener('click', () => {
     lightningEffect.classList.add('active-lightning');
 
     // モニターに変換中ステータスを表示
-    meigenOutput.innerText = "⚡ 不満ガスを吸収中... タービン臨界突破... ポジティブエネルギーに変換しています ⚡";
+    meigenOutput.innerText = "⚡ 不満ガスを吸収中... タービン臨界突破... ポジティブエネルギーを生成しています ⚡";
 
-    // --- 【ランダム選択 ＆ ログ追加フェーズ】 ---
-    // 演出をじっくり見せるために、1.5秒だけ待ってから名言を表示する
+    // 今回選ばれた名言を一時的にキープする変数
+    let selectedMeigen = "";
+
+    // データベースから事前に1つランダムに選んでおく
+    const randomIndex = Math.floor(Math.random() * meigenDatabase.length);
+    selectedMeigen = meigenDatabase[randomIndex];
+
+    // --- 演出①：3.5秒後にタービンの回転と電撃が「停止」 ---
     setTimeout(() => {
+        turbine.classList.remove('spinning');
+        lightningEffect.classList.remove('active-lightning');
         
-        // データベースからランダムに1個選ぶ
-        const randomIndex = Math.floor(Math.random() * meigenDatabase.length);
-        const selectedMeigen = meigenDatabase[randomIndex];
+        // タービンが止まった瞬間の静寂を演出
+        meigenOutput.innerText = "⏳ 発電完了。エネルギーを凝縮しています...";
+        
+        // 入力欄とボタンはここで次のために解放
+        chargeBtn.disabled = false; 
+        fumanInput.value = ''; 
+    }, 3500);
 
-        // 1. メインモニターに名言を表示
+    // --- 演出②：タービン停止の「5秒後」（合計8.5秒後）に名言出現 ＆ ログ追加 ---
+    setTimeout(() => {
+        // 1. メインモニターに満を持して名言を表示！
         meigenOutput.innerText = selectedMeigen;
 
-        // 2. 右側のサイドバー（ログ）へ蓄積
-        // 初回のみ「まだ発電された名言はありません」という初期メッセージを消去
+        // 2. 同時に右側のサイドバー（ログ）へ蓄積
         const emptyMsg = logHistory.querySelector('.empty-log-msg');
         if (emptyMsg) {
             emptyMsg.remove();
         }
 
-        // ログ用の新しい枠（div）を作る
         const newLog = document.createElement('div');
         newLog.classList.add('log-item');
         newLog.innerText = selectedMeigen; 
 
-        // ログエリアの一番上に挿入（最新の名言が一番上に見えるようにする）
+        // ログエリアの一番上に挿入（最新が一番上）
         logHistory.insertBefore(newLog, logHistory.firstChild);
-
-    }, 1500);
-
-    // --- 【冷却フェーズ：演出を通常に戻す】 ---
-    // 3.5秒後にすべての演出を落ち着かせ、次の入力に備える
-    setTimeout(() => {
-        turbine.classList.remove('spinning');
-        lightningEffect.classList.remove('active-lightning');
-        chargeBtn.disabled = false; // ボタンを再度押せるようにする
-        fumanInput.value = ''; // 入力欄を綺麗にクリア
-    }, 3500);
+    }, 8500); 
 });
