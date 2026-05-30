@@ -1,57 +1,106 @@
-body {
-    background-color: #1a1a1a;
-    color: #fff;
-    font-family: sans-serif;
+/* style.css のタービンエリア */
+
+/* 1. 外側の重厚な金属製ハウジング（枠） */
+.turbine-container-3d {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin: 30px auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    border-radius: 50%;
+    /* 3D感を出すための外影と内影の組み合わせ */
+    background: linear-gradient(145deg, #1e1e1e, #111111);
+    box-shadow: 7px 7px 15px #0d0d0d, 
+                -7px -7px 15px #272727,
+                inset 5px 5px 10px #000000;
+    border: 3px solid #222;
 }
 
-.game-container {
-    text-align: center;
-    background: #2a2a2a;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,255,0,0.2);
+/* 2. タービン本体（ローターディスク） */
+.turbine-3d {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    /* メタリックな円周ヘアライン風グラデーション */
+    background: radial-gradient(circle at 30% 30%, #555555 0%, #292929 40%, #1a1a1a 70%, #444444 100%);
+    /* ディスク自体が浮き出ているようなシャドウ */
+    box-shadow: 5px 5px 10px #0a0a0a, 
+                -3px -3px 8px #3a3a3a,
+                inset 2px 2px 3px rgba(255,255,255,0.2);
+    transition: transform 0.1s linear, filter 0.2s ease;
 }
 
-.turbine {
-    font-size: 80px;
-    margin: 30px auto;
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
-    transition: transform 0.1s linear;
+/* 3. 中心の3D球体コア */
+.core-3d {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 46px; height: 46px;
+    margin-top: -23px; margin-left: -23px;
+    border-radius: 50%;
+    /* 左上から光が当たっている球体を表現 */
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #00ffff 20%, #006666 60%, #002222 100%);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6),
+                3px 5px 8px rgba(0,0,0,0.5);
+    z-index: 10;
 }
 
-/* 激しく回転するアニメーション（クラスを後から付与する） */
+/* 4. 立体的な傾きを持つブレード（羽根） */
+.blade-3d {
+    position: absolute;
+    top: 0; left: 86px; /* 中心線に合わせる */
+    width: 18px;
+    height: 190px;
+    /* 左右で明暗をハッキリ分けて「ひねり」のある立体感を出す */
+    background: linear-gradient(90deg, 
+                rgba(255,255,255,0.15) 0%, 
+                #777777 20%, 
+                #333333 50%, 
+                #111111 80%, 
+                #000000 100%);
+    border-radius: 6px;
+    /* 羽根がディスクに落とす細い影 */
+    box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* 8枚のブレードを45度刻みで綺麗に配置 */
+.b1 { transform: rotate(0deg); }
+.b2 { transform: rotate(45deg); }
+.b3 { transform: rotate(90deg); }
+.b4 { transform: rotate(135deg); }
+.b5 { transform: rotate(180deg); }
+.b6 { transform: rotate(225deg); }
+.b7 { transform: rotate(270deg); }
+.b8 { transform: rotate(315deg); }
+
+/* --- アニメーション＆不満注入時の発光エフェクト --- */
+
 .spinning {
     animation: spin var(--spin-speed, 1s) linear infinite;
 }
 
-@keyframes spin { 
+@keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
-textarea {
-    width: 80%;
-    height: 60px;
-    background: #333;
-    color: #fff;
-    border: 1px solid #555;
-    padding: 10px;
+/* 3Dハウジングの溝がサイバーパンクに光る演出 */
+.lightning-3d {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s, box-shadow 0.2s;
 }
 
-button {
-    display: block;
-    margin: 10px auto;
-    padding: 10px 20px;
-    background: #00ff88;
-    color: #000;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
+/* 不満ガスが注入されてタービンが激しく回った時のネオンオーラ */
+.active-lightning {
+    opacity: 1;
+    box-shadow: 0 0 var(--lightning-intensity, 15px) #00ffff,
+                inset 0 0 var(--lightning-intensity, 15px) #00ffff;
+    filter: drop-shadow(0 0 10px #00ffff);
 }

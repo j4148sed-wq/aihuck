@@ -1,6 +1,7 @@
 const fumanInput = document.getElementById('fumanInput');
 const chargeBtn = document.getElementById('chargeBtn');
 const turbine = document.getElementById('turbine');
+const lightningEffect = document.getElementById('lightning-effect'); // HTMLのIDと一致していればOK！
 const meigenOutput = document.getElementById('meigenOutput');
 
 // ダミーの名言（迷言）リスト（本来はここをAI化する）
