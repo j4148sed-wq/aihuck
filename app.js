@@ -19,7 +19,7 @@ chargeBtn.addEventListener('click', () => {
     const text = fumanInput.value.trim();
     if (!text) return;
 
-    // 文字数に応じて回転速度を決定（文字数が多いほど速い＝秒数が短い）
+    // 文字数に応じて回転速度を決定（文字数が多いほど速い＝秒数が短い） 
     let speed = 1.0 - (text.length * 0.02);
     if (speed < 0.05) speed = 0.05; // 最高速度の制限
 
