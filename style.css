@@ -1,4 +1,6 @@
-/* 全体のリセットと背景設定 */
+/* ==========================================================================
+   1. 全体のリセット & 共通設定 (Reset & Base)
+   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -16,11 +18,24 @@ body {
     padding: 20px;
 }
 
-/* ゲームのメインダッシュボード */
+/* ==========================================================================
+   2. 画面レイアウト (Layout)
+   ========================================================================== */
+/* 左右のパネルを並べるメインコンテナ */
+.main-layout {
+    display: flex;
+    flex-direction: row; /* 横並び */
+    gap: 25px;           /* パネル同士の隙間 */
+    width: 100%;
+    max-width: 900px;    /* 2画面が綺麗に収まる最大幅 */
+    align-items: flex-start;
+}
+
+/* 左側：メインの発電ダッシュボード */
 .game-dashboard {
     background: linear-gradient(135deg, #12181f 0%, #0b1015 100%);
-    width: 100%;
-    max-width: 500px;
+    flex: 1;
+    min-width: 340px;
     padding: 30px 25px;
     border-radius: 20px;
     border: 2px solid #1f2d3d;
@@ -28,11 +43,26 @@ body {
     text-align: center;
 }
 
-/* ヘッダーデザイン */
+/* 右側：過去の名言ログサイドバー */
+.log-sidebar {
+    background: #0f151c;
+    border: 2px solid #1f2d3d;
+    border-radius: 20px;
+    padding: 20px;
+    flex: 1;
+    min-width: 320px;
+    height: 545px; /* 左側のダッシュボードと高さを綺麗に揃える */
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   3. ヘッダー & テキスト (Typography)
+   ========================================================================== */
 .game-header h1 {
     font-size: 1.8rem;
     font-weight: 800;
-    color: #00ff88;
+    color: #00ff88; /* 蛍光グリーン */
     text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
     letter-spacing: 1.5px;
     margin-bottom: 5px;
@@ -45,7 +75,9 @@ body {
     letter-spacing: 2px;
 }
 
-/* タービン配置ゾーン */
+/* ==========================================================================
+   4. タービンエリア (Turbine Component)
+   ========================================================================== */
 .turbine-zone {
     padding: 20px 0;
     display: flex;
@@ -53,7 +85,7 @@ body {
     align-items: center;
 }
 
-/* --- タービン（元のデザインを美しく配置） --- */
+/* 外側の丸いハウジング枠 */
 .turbine-container {
     position: relative;
     width: 200px;
@@ -67,6 +99,7 @@ body {
     box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
 }
 
+/* CSSで描くタービンローター本体 */
 .css-turbine {
     position: relative;
     width: 160px;
@@ -77,6 +110,7 @@ body {
     transition: transform 0.1s linear, filter 0.2s ease;
 }
 
+/* 中心の青白い3Dコア（ベアリング） */
 .turbine-core {
     position: absolute;
     top: 50%; left: 50%;
@@ -88,9 +122,10 @@ body {
     z-index: 10;
 }
 
+/* 放射状に伸びる金属ブレード（羽根）の共通設定 */
 .blade {
     position: absolute;
-    top: 0; left: 73px;
+    top: 0; left: 73px; /* 中心線にぴったり合わせる */
     width: 14px;
     height: 160px;
     background: linear-gradient(90deg, #485666, #95a5b5 30%, #283442 70%, #0f141a);
@@ -98,16 +133,20 @@ body {
     opacity: 0.9;
 }
 
+/* ブレード4枚を45度刻みで綺麗に配置 */
 .b1 { transform: rotate(0deg); }
 .b2 { transform: rotate(45deg); }
 .b3 { transform: rotate(90deg); }
 .b4 { transform: rotate(135deg); }
 
-/* --- 操作パネルエリア --- */
+/* ==========================================================================
+   5. 操作エリア (Control Panel)
+   ========================================================================== */
 .control-panel {
     margin-top: 15px;
 }
 
+/* 不満入力欄を包むサイバーボックス */
 .input-box {
     position: relative;
     background: #080d11;
@@ -138,7 +177,7 @@ body {
     color: #4a5d73;
 }
 
-/* 発電ボタン */
+/* ネオン風の不満注入（発電）ボタン */
 #chargeBtn {
     width: 100%;
     margin-top: 15px;
@@ -163,7 +202,9 @@ body {
     transform: translateY(1px);
 }
 
-/* --- 出力（モニター）エリア --- */
+/* ==========================================================================
+   6. 現在の出力モニター (Monitor Display)
+   ========================================================================== */
 .output-monitor {
     margin-top: 25px;
     text-align: left;
@@ -172,7 +213,7 @@ body {
 .monitor-tag {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #00ffff;
+    color: #00ffff; /* サイバーブルー */
     letter-spacing: 1px;
     margin-bottom: 6px;
     padding-left: 4px;
@@ -183,7 +224,7 @@ body {
     border-left: 4px solid #00ffff;
     border-radius: 4px 12px 12px 4px;
     padding: 18px;
-    min-height: 80px;
+    min-height: 85px;
     display: flex;
     align-items: center;
 }
@@ -195,7 +236,69 @@ body {
     text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
 }
 
-/* --- アニメーション関連 --- */
+/* ==========================================================================
+   7. 過去の名言ログ履歴 (Log History Sidebar)
+   ========================================================================== */
+.sidebar-tag {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #00ff88;
+    letter-spacing: 1.5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #1f2d3d;
+    padding-bottom: 8px;
+}
+
+/* ログのスクロールエリア */
+.log-history {
+    flex: 1;
+    overflow-y: auto; /* ログが増えたら自動でスクロールバーを出す */
+    padding-right: 5px;
+}
+
+/* スクロールバーのサイバー風スタイリング */
+.log-history::-webkit-scrollbar {
+    width: 6px;
+}
+.log-history::-webkit-scrollbar-thumb {
+    background: #1f2d3d;
+    border-radius: 3px;
+}
+.log-history::-webkit-scrollbar-thumb:hover {
+    background: #00ff88;
+}
+
+/* ログがまだ無いときの初期メッセージ */
+.empty-log-msg {
+    color: #4a5d73;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 40px;
+    font-style: italic;
+}
+
+/* 生成されてどんどん蓄積される個々のログボックス */
+.log-item {
+    background: #070a0e;
+    border-left: 3px solid #00ff88;
+    padding: 12px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #b0c4de;
+    animation: fadeInLog 0.4s ease-out; /* 登場時のふわっとしたアニメーション */
+}
+
+@keyframes fadeInLog {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   8. アニメーション & 動的エフェクト (Animations & Interaction)
+   ========================================================================== */
+/* JSで付与される、高速回転用のクラス */
 .spinning {
     animation: spin var(--spin-speed, 1s) linear infinite;
 }
@@ -205,6 +308,7 @@ body {
     to { transform: rotate(360deg); }
 }
 
+/* 周囲を包む電撃・活性化オーラエフェクトの初期状態 */
 .lightning-effect {
     position: absolute;
     top: 0; left: 0;
@@ -215,8 +319,27 @@ body {
     transition: opacity 0.2s, box-shadow 0.2s;
 }
 
+/* 不満注入（発電）時にJSでクラスが足されるとビカビカ光る */
 .active-lightning {
     opacity: 1;
     box-shadow: 0 0 var(--lightning-intensity, 12px) #00ffff,
                 inset 0 0 var(--lightning-intensity, 12px) #00ffff;
+}
+
+/* ==========================================================================
+   9. レスポンシブ対応 (Responsive Mobile Design)
+   ========================================================================== */
+/* 画面の横幅がタブレットやスマホ級（768px以下）になったら自動で縦並びにする */
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+    .game-dashboard, .log-sidebar {
+        width: 100%;
+        max-width: 500px;
+    }
+    .log-sidebar {
+        height: 380px; /* モバイルではログを少しコンパクトに畳む */
+    }
 }

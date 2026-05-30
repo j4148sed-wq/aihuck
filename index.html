@@ -7,40 +7,51 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-dashboard">
-        <header class="game-header">
-            <h1>⚡FUMAN POWER PLANT⚡</h1>
-            <p class="subtitle">不満をエネルギーに変換せよ</p>
-        </header>
+    <div class="main-layout">
         
-        <div class="turbine-zone">
-            <div class="turbine-container">
-                <div id="turbine" class="css-turbine">
-                    <div class="turbine-core"></div>
-                    <div class="blade b1"></div>
-                    <div class="blade b2"></div>
-                    <div class="blade b3"></div>
-                    <div class="blade b4"></div>
+        <div class="game-dashboard">
+            <header class="game-header">
+                <h1>⚡ FUMAN POWER PLANT ⚡</h1>
+                <p class="subtitle">不満をエネルギーに変換せよ</p>
+            </header>
+            
+            <div class="turbine-zone">
+                <div class="turbine-container">
+                    <div id="turbine" class="css-turbine">
+                        <div class="turbine-core"></div>
+                        <div class="blade b1"></div>
+                        <div class="blade b2"></div>
+                        <div class="blade b3"></div>
+                        <div class="blade b4"></div>
+                    </div>
+                    <div id="lightning-effect" class="lightning-effect"></div>
                 </div>
-                <div id="lightning-effect" class="lightning-effect"></div>
+            </div>
+
+            <div class="control-panel">
+                <div class="input-box">
+                    <textarea id="fumanInput" placeholder="上司の指示、日常の理不尽、溜まった負のガスをここに注入せよ..."></textarea>
+                </div>
+                <button id="chargeBtn">
+                    <span class="btn-icon">🔋</span> 不満を注入（発電開始）
+                </button>
+            </div>
+
+            <div class="output-monitor">
+                <div class="monitor-tag">CURRENT GENERATED ENERGY</div>
+                <div class="monitor-screen">
+                    <p id="meigenOutput">ここにポジティブエネルギー（名言）が出力されます</p>
+                </div>
             </div>
         </div>
 
-        <div class="control-panel">
-            <div class="input-box">
-                <textarea id="fumanInput" placeholder="上司の指示、日常の理不尽をここに注入せよ..."></textarea>
+        <aside class="log-sidebar">
+            <div class="sidebar-tag">🔋 GENERATED MEIGEN LOGS</div>
+            <div id="logHistory" class="log-history">
+                <p class="empty-log-msg">まだ発電された名言はありません</p>
             </div>
-            <button id="chargeBtn">
-                <span class="btn-icon">🔋</span> 不満を注入（発電開始）
-            </button>
-        </div>
+        </aside>
 
-        <div class="output-monitor">
-            <div class="monitor-tag">CONVERTED ENERGY LOG</div>
-            <div class="monitor-screen">
-                <p id="meigenOutput">ここにポジティブエネルギー（名言）が出力されます</p>
-            </div>
-        </div>
     </div>
     <script src="app.js"></script>
 </body>
